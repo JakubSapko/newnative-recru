@@ -8,7 +8,8 @@ interface IApiContext {
 
 const ApiContext = createContext<IApiContext>({
   apiKey: null,
-  handleSubmit: (apiKey: string) => {},
+  handleSubmit: (apiKey: string) => {
+  },
 });
 
 export const useApiContext = () => {
@@ -23,6 +24,7 @@ type ApiContextProviderProps = {
 
 export const ApiContextProvider = ({ children }: ApiContextProviderProps) => {
   const [apiKey, setApiKey] = useState<string | null>(null);
+
 
   const handleSubmit = (apiKey: string) => {
     console.log("Received key", apiKey);

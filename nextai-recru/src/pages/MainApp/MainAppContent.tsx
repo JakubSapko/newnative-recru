@@ -4,25 +4,16 @@ import AcessedApp from "./AcessedApp";
 import Unauthorized from "./Unauthorized";
 
 const MainAppContent: React.FC = () => {
+  const { apiKey } = useApiContext();
 
-  const {apiKey} = useApiContext();
-
-
-  const determineViewBasedOnKey = () => {
-    if (apiKey) {
-      return <AcessedApp/>;
-    }
-    else {
-      return <Unauthorized/>;
-    }
-  }
-    return (
-      <>
-        {determineViewBasedOnKey()}
-        <Footer />
-      </>
-    );
-  };
+  console.log("test");
   
-  export default MainAppContent;
-  
+  return (
+    <>
+      {apiKey ? <AcessedApp /> : <Unauthorized />}
+      <Footer />
+    </>
+  );
+};
+
+export default MainAppContent;

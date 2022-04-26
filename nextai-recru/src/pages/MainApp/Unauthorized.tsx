@@ -1,24 +1,24 @@
 import { Button, Form, Input } from "antd";
 import { useApiContext } from "../../components/ApiContext";
 
-
 interface IApiInput {
-    apiKey: string
+  apiKey: string;
 }
 
 const Unauthorized: React.FC = () => {
   const { handleSubmit } = useApiContext();
 
+  const [form] = Form.useForm();
 
-  const passInputValue = (value: IApiInput) => {
-    console.log(value.apiKey);
-    handleSubmit(value.apiKey);
-  };
+//   const passInputValue = (value: IApiInput) => {
+//     console.log(value.apiKey);
+//     handleSubmit(value.apiKey);
+//   };
 
   return (
     <div>
       unauthorized
-      <Form name="apiKeyHandler" onFinish={passInputValue}>
+      <Form form={form} name="apiKeyHandler">
         <Form.Item
           label="API Key"
           name="apiKey"
@@ -29,7 +29,17 @@ const Unauthorized: React.FC = () => {
           <Input />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" onClick={()=>{
+              form
+              .validateFields()
+              .then((value: IApiInput) => {
+                  console.log("dupta")
+                handleSubmit(value.apiKey);
+              })
+              .catch((info) => {
+                  console.log("Input failed", info);
+              })
+          }}>
             Submit your API key
           </Button>
         </Form.Item>

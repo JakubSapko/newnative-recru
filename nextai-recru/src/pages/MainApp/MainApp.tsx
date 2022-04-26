@@ -1,13 +1,16 @@
-import React from 'react';
+import React from "react";
 import "antd/dist/antd.css";
-import SiteLayout from '../../components/SiteLayout';
-import NavMenu from '../../components/NavMenu';
-import MainAppContent from './MainAppContent';
+import SiteLayout from "../../components/SiteLayout";
+import NavMenu from "../../components/NavMenu";
+import MainAppContent from "./MainAppContent";
+import { ApiContextProvider } from "../../components/ApiContext";
 
-const MainApp:React.FC = () => {
+const MainApp: React.FC = () => {
   return (
-    <SiteLayout Header={<NavMenu/>} Content={<MainAppContent/>}/>
+    <ApiContextProvider>
+      <SiteLayout Header={<NavMenu />} Content={<MainAppContent />} />
+    </ApiContextProvider>
   );
-}
+};
 
 export default MainApp;
