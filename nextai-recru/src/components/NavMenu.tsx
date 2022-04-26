@@ -11,7 +11,7 @@ const NavMenu: React.FC = () => {
         <Link to="/overview">My overview on AI in general </Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/login"> App </Link>
+        <Link to="/app"> App </Link>
       </Menu.Item>
     </Menu>
   );
