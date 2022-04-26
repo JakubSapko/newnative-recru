@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useApiContext } from "../../components/ApiContext";
 import Footer from "../../components/Footer";
 import AcessedApp from "./AcessedApp";
@@ -10,7 +9,6 @@ const MainAppContent: React.FC = () => {
 
 
   const determineViewBasedOnKey = () => {
-    console.log(apiKey);
     if (apiKey) {
       return <AcessedApp/>;
     }
