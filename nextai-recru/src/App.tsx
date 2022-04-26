@@ -1,11 +1,19 @@
-import React from 'react';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Landing from "./pages/Landing/Landing";
 
-function App() {
+
+
+const MainApp = () => {
   return (
-    <div>
-      elo
-    </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          {/* <Route path="overview" element={<Overview />} />
+          <Route path="login" element={<Login />} /> */}
+        </Routes>
+      </BrowserRouter>
   );
-}
+};
 
-export default App;
+export default MainApp;
