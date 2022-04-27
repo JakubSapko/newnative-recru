@@ -6,8 +6,6 @@ import Unauthorized from "./Unauthorized";
 const MainAppContent: React.FC = () => {
   const { apiKey } = useApiContext();
 
-  console.log("test");
-  
   return (
     <>
       {apiKey ? <AcessedApp /> : <Unauthorized />}

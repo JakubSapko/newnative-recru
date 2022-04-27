@@ -1,7 +1,7 @@
 import { Button, Form, Input } from "antd";
 import { useApiContext } from "../../components/ApiContext";
 
-export interface IApiInput {
+export interface IApiKeyInput {
   apiKey: string;
 }
 
@@ -10,7 +10,7 @@ const Unauthorized: React.FC = () => {
 
   const [form] = Form.useForm();
 
-//   const passInputValue = (value: IApiInput) => {
+//   const passInputValue = (value: IApiKeyInput) => {
 //     console.log(value.apiKey);
 //     handleSubmit(value.apiKey);
 //   };
@@ -32,7 +32,7 @@ const Unauthorized: React.FC = () => {
           <Button type="primary" onClick={()=>{
               form
               .validateFields()
-              .then((value: IApiInput) => {
+              .then((value: IApiKeyInput) => {
                 handleSubmit(value.apiKey);
               })
               .catch((info) => {

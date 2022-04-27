@@ -1,27 +1,21 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import { useApiContext } from "../../../components/ApiContext";
-import { IApiInput } from "../Unauthorized";
+
+interface IApiInput {
+  prompt: string;
+  philosopher: string;
+}
 
 const AcessedApp: React.FC = () => {
   const { openAiMemo } = useApiContext();
   const [form] = Form.useForm();
 
-  //   const passInputValue = (value: IApiInput) => {
-  //     console.log(value.apiKey);
-  //     handleSubmit(value.apiKey);
-  //   };
+  const { Option } = Select;
 
-  // const { Configuration, OpenAIApi } = require("openai");
-
-  // const configuration = new Configuration({
-  //   apiKey: process.env.OPENAI_API_KEY,
-  // });
-  // const openai = new OpenAIApi(configuration);
-
-  const handleSubmit = async (value: string) => {
+  const handleSubmit = async (prompt: string, philosopher: string) => {
     if (openAiMemo) {
       const response = await openAiMemo.createCompletion("text-davinci-002", {
-        prompt: "generate a Marx-like philosophical quote on cats.",
+        prompt: `generate a ${philosopher}-like philosophical quote on ${prompt}.`,
         temperature: 0.7,
         max_tokens: 256,
         top_p: 1,
@@ -34,10 +28,31 @@ const AcessedApp: React.FC = () => {
     return null;
   };
 
+  function handleChange(value: string) {
+    console.log(`selected ${value}`);
+  }
+
+  const Philosophers = {
+      Platon: "Platon",
+      MarcusAurelius: "Marcus Aurelius",
+      Socrates: "Socrates",
+      Nietzsche: "Nietzsche",
+      Marx: "Marx",
+      StAugustin: "Saint Augustin"
+  }
+
   return (
     <div>
       authorized
       <Form form={form} name="apiConnector">
+        <Form.Item label="Choose your philosopher" name="philosopher" rules={[{required: true, message: "Please select the philosopher of your choice"}]}>
+          <Select
+            style={{ width: 170 }}
+            onChange={handleChange}
+          >
+              {Object.entries(Philosophers).map(([key, value]) => <Option value={value}>{value}</Option>)}
+          </Select>
+        </Form.Item>
         <Form.Item
           label="Your philosophical request"
           name="prompt"
@@ -48,7 +63,7 @@ const AcessedApp: React.FC = () => {
             },
           ]}
         >
-          <Input />
+          <Input autoComplete="off" />
         </Form.Item>
         <Form.Item>
           <Button
@@ -56,8 +71,9 @@ const AcessedApp: React.FC = () => {
             onClick={() => {
               form
                 .validateFields()
-                .then((value: IApiInput) => {
-                  handleSubmit(value.apiKey);
+                .then((values: IApiInput) => {
+                  console.log(values);
+                  handleSubmit(values.prompt, values.philosopher);
                 })
                 .catch((info) => {
                   console.log("Input failed", info);
