@@ -1,7 +1,7 @@
 import { Button, Form, Input } from "antd";
 import { useApiContext } from "../../components/ApiContext";
 
-interface IApiInput {
+export interface IApiInput {
   apiKey: string;
 }
 
@@ -33,7 +33,6 @@ const Unauthorized: React.FC = () => {
               form
               .validateFields()
               .then((value: IApiInput) => {
-                  console.log("dupta")
                 handleSubmit(value.apiKey);
               })
               .catch((info) => {
