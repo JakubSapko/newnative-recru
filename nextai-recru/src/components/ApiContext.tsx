@@ -1,8 +1,11 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+
+import { Configuration, OpenAIApi } from "openai";
 
 interface IApiContext {
   apiKey: string | null;
   handleSubmit: (apiKey: string) => void;
+  openAiMemo: OpenAIApi | null
 }
 
 
@@ -10,6 +13,7 @@ const ApiContext = createContext<IApiContext>({
   apiKey: null,
   handleSubmit: (apiKey: string) => {
   },
+  openAiMemo: null
 });
 
 export const useApiContext = () => {
@@ -22,8 +26,26 @@ type ApiContextProviderProps = {
   children: ReactNode;
 };
 
+
+const getOpenAI = (apiKey: string) => {
+  const config = new Configuration({
+    apiKey: apiKey
+  });
+
+  return new OpenAIApi(config);
+}
+
 export const ApiContextProvider = ({ children }: ApiContextProviderProps) => {
   const [apiKey, setApiKey] = useState<string | null>(null);
+
+
+
+  const openAiMemo = useMemo(() => {
+      const openAI = apiKey ? getOpenAI(apiKey) : null;
+      
+      return openAI;
+
+  }, [apiKey])
 
 
   const handleSubmit = (apiKey: string) => {
@@ -34,6 +56,7 @@ export const ApiContextProvider = ({ children }: ApiContextProviderProps) => {
   const contextValue: IApiContext = {
     apiKey,
     handleSubmit,
+    openAiMemo
   };
 
   return (
