@@ -1,14 +1,25 @@
 import { useApiContext } from "../../components/ApiContext";
+import { ApiResponseContextProvider } from "../../components/ApiResponseContext";
 import Footer from "../../components/Footer";
-import AcessedApp from "./AcessedApp/AcessedApp";
+import PhilosopherSlideMock from "../../PhilosopherSlideMock";
+import MainForm from "./MainForm";
 import Unauthorized from "./Unauthorized";
+
+
 
 const MainAppContent: React.FC = () => {
   const { apiKey } = useApiContext();
 
   return (
     <>
-      {apiKey ? <AcessedApp /> : <Unauthorized />}
+      {apiKey ? (
+        <ApiResponseContextProvider>
+          <MainForm />
+          <PhilosopherSlideMock />
+        </ApiResponseContextProvider>
+      ) : (
+        <Unauthorized />
+      )}
       <Footer />
     </>
   );
