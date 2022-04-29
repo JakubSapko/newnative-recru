@@ -1,3 +1,0 @@
-# nextai-recru
-
-example
