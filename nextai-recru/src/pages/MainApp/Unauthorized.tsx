@@ -33,13 +33,13 @@ const Unauthorized: React.FC = () => {
       <StyledHeader>You are unauthorized! Please provide your OpenAI API key below:</StyledHeader>
       <Form form={form} name="apiKeyHandler">
         <Form.Item
-          label={<label style={{color: "white"}}>API KEY</label>}
+          label={<label style={{color: "white"}}>API Key</label>}
           name="apiKey"
           rules={[
             { required: true, message: "Please provide your OpenAI API key!" },
           ]}
         >
-          <Input type="password"/>
+          <Input placeholder="Please note that what you provide is not validated and should be a proper API key!" type="password"/>
         </Form.Item>
         <Form.Item>
           <StyledButton type="primary" onClick={()=>{

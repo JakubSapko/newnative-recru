@@ -5,11 +5,9 @@ const NavMenu: React.FC = () => {
   return (
     <Menu mode="horizontal">
       <Menu.Item>
-        <Link to="/">Landing page</Link>
+        <Link to="/">My overview on task and AI in general</Link>
       </Menu.Item>
-      <Menu.Item>
-        <Link to="/overview">My overview on AI in general </Link>
-      </Menu.Item>
+
       <Menu.Item>
         <Link to="/app"> App </Link>
       </Menu.Item>

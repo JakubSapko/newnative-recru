@@ -1,12 +1,30 @@
 import { Button, Form, Input, Select } from "antd";
+import styled from "styled-components";
 import { useApiContext } from "../../components/ApiContext";
-import { useNavigate } from "react-router-dom";
 import { useApiResponseContext } from "../../components/ApiResponseContext";
+import "../../global.css";
 
 interface IApiInput {
   prompt: string;
   philosopher: string;
 }
+
+const StyledPromptForm = styled(Form)`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 30px;
+  margin: 10px auto;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+`;
+const StyledInput = styled(Input)`
+  width: 300px;
+`;
+
 
 const MainForm: React.FC = () => {
   const { openAiMemo } = useApiContext();
@@ -59,9 +77,9 @@ const MainForm: React.FC = () => {
     }
   };
 
-  function handleChange(value: string) {
+  const handleChange = (value: string) => {
     console.log(`selected ${value}`);
-  }
+  };
 
   const Philosophers = {
     Plato: "Plato",
@@ -73,10 +91,14 @@ const MainForm: React.FC = () => {
   };
 
   return (
-    <div>
-      <Form form={form} name="apiConnector">
+    <Wrapper>
+      <StyledPromptForm
+        requiredMark={"optional"}
+        form={form}
+        name="apiConnector"
+      >
         <Form.Item
-          label="Choose your philosopher"
+          label={<label style={{ color: "white" }}>Generate a </label>}
           name="philosopher"
           rules={[
             {
@@ -85,14 +107,19 @@ const MainForm: React.FC = () => {
             },
           ]}
         >
-          <Select style={{ width: 170 }} onChange={handleChange}>
+          <Select
+            placeholder="Philosopher"
+            style={{ width: 170 }}
+            onChange={handleChange}
+          >
             {Object.entries(Philosophers).map(([key, value]) => (
               <Option value={value}>{value}</Option>
             ))}
           </Select>
         </Form.Item>
+        <Form.Item style={{ color: "white" }}>-like</Form.Item>
         <Form.Item
-          label="Your philosophical request"
+          label={<label style={{ color: "white" }}> quote on</label>}
           name="prompt"
           rules={[
             {
@@ -101,7 +128,10 @@ const MainForm: React.FC = () => {
             },
           ]}
         >
-          <Input autoComplete="off" />
+          <StyledInput
+            placeholder="(e.g.) money, bread, dogs, neural networks"
+            autoComplete="off"
+          />
         </Form.Item>
         <Form.Item>
           <Button
@@ -113,18 +143,17 @@ const MainForm: React.FC = () => {
                 .then((values: IApiInput) => {
                   console.log(values);
                   handleSubmit(values.prompt, values.philosopher);
-                  // navigate("/philo");
                 })
                 .catch((info) => {
                   console.log("Input failed", info);
                 });
             }}
           >
-            Submit your request
+            Get your quote!
           </Button>
         </Form.Item>
-      </Form>
-    </div>
+      </StyledPromptForm>
+    </Wrapper>
   );
 };
 

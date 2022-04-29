@@ -8,16 +8,17 @@ const FooterWrapper = styled.footer`
   margin: 1em;
   text-align: right;
   font-size: 0.9em;
-  color: #0d3b66;
+  color: white;
   z-index: 3;
   p {
     width: auto;
     height: 50px;
     margin: 0;
+    font-size: 15px;
   }
   a {
     text-decoration: none;
-    color: #0d3b66;
+    color: white;
     font-size: 1.4em;
     font-weight: bold;
   }
@@ -37,7 +38,7 @@ const Footer: React.FC = () => {
       <p>
         {" "}
         Created by: <br />{" "}
-        <Icon icon="logos:github-icon" style={{height: "20px", width: "20px"}}/>
+        <Icon icon="akar-icons:github-outline-fill" style={{ height: "30px", width: "30px"}}/>
         <a href="https://github.com/JakubSapko"> Jakub Sapko </a>{" "}
       </p>
     </FooterWrapper>
