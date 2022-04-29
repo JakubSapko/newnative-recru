@@ -1,6 +1,9 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
+import { Configuration, OpenAIApi } from "openai";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useApiContext } from "../../components/ApiContext";
+import { useApiResponseContext } from "../../components/ApiResponseContext";
 
 export interface IApiKeyInput {
   apiKey: string;
@@ -24,34 +27,83 @@ const StyledHeader = styled.h2`
 `;
 
 const Unauthorized: React.FC = () => {
-  const { handleSubmit } = useApiContext();
+  const { handleSubmit, clearApiKey } = useApiContext();
+  const { setIsLoading, isLoading } = useApiResponseContext();
 
   const [form] = Form.useForm();
 
+  const navigate = useNavigate();
+
+  const throwMessage = () => {
+    message.error("You provided invalid API key!");
+  };
+
+  const validateKey = async (apiKey: string) => {
+    setIsLoading(true);
+
+    try {
+      const config = new Configuration({
+        apiKey: apiKey,
+      });
+
+      const openAI = new OpenAIApi(config);
+
+      const response = await openAI.createCompletion("text-davinci-002", {
+        prompt: `generate some text`,
+        temperature: 0.7,
+        max_tokens: 64,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      });
+    } catch (e) {
+      clearApiKey();
+      throwMessage();
+
+      navigate("/app");
+      return false;
+    }
+
+    setIsLoading(false);
+    return true;
+  };
+
   return (
     <StyledApiKeyForm>
-      <StyledHeader>You are unauthorized! Please provide your OpenAI API key below:</StyledHeader>
+      <StyledHeader>
+        You are unauthorized! Please provide your OpenAI API key below:
+      </StyledHeader>
       <Form form={form} name="apiKeyHandler">
         <Form.Item
-          label={<label style={{color: "white"}}>API Key</label>}
+          label={<label style={{ color: "white" }}>API Key</label>}
           name="apiKey"
           rules={[
             { required: true, message: "Please provide your OpenAI API key!" },
           ]}
         >
-          <Input placeholder="Please note that what you provide is not validated and should be a proper API key!" type="password"/>
+          <Input
+            placeholder="Please note that your key will be validated!"
+            type="password"
+          />
         </Form.Item>
         <Form.Item>
-          <StyledButton type="primary" onClick={()=>{
+          <StyledButton
+            loading={isLoading}
+            type="primary"
+            onClick={() => {
               form
-              .validateFields()
-              .then((value: IApiKeyInput) => {
-                handleSubmit(value.apiKey);
-              })
-              .catch((info) => {
+                .validateFields()
+                .then(async (value: IApiKeyInput) => {
+                  if(await validateKey(value.apiKey)){
+                    handleSubmit(value.apiKey);
+                  }
+                  
+                })
+                .catch((info) => {
                   console.log("Input failed", info);
-              })
-          }}>
+                });
+            }}
+          >
             Submit your API key
           </StyledButton>
         </Form.Item>

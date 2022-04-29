@@ -5,7 +5,8 @@ import { Configuration, OpenAIApi } from "openai";
 interface IApiContext {
   apiKey: string | null;
   handleSubmit: (apiKey: string) => void;
-  openAiMemo: OpenAIApi | null
+  openAiMemo: OpenAIApi | null,
+  clearApiKey: () => void
 }
 
 
@@ -13,7 +14,10 @@ const ApiContext = createContext<IApiContext>({
   apiKey: null,
   handleSubmit: (apiKey: string) => {
   },
-  openAiMemo: null
+  openAiMemo: null,
+  clearApiKey: () => {
+    
+  }
 });
 
 export const useApiContext = () => {
@@ -47,6 +51,9 @@ export const ApiContextProvider = ({ children }: ApiContextProviderProps) => {
 
   }, [apiKey])
 
+  const clearApiKey = () => {
+    setApiKey(null);
+  }
 
   const handleSubmit = (apiKey: string) => {
     console.log("Received key", apiKey);
@@ -56,7 +63,8 @@ export const ApiContextProvider = ({ children }: ApiContextProviderProps) => {
   const contextValue: IApiContext = {
     apiKey,
     handleSubmit,
-    openAiMemo
+    openAiMemo, 
+    clearApiKey
   };
 
   return (

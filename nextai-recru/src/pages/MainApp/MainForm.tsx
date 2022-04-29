@@ -25,7 +25,6 @@ const StyledInput = styled(Input)`
   width: 300px;
 `;
 
-
 const MainForm: React.FC = () => {
   const { openAiMemo } = useApiContext();
   const [form] = Form.useForm();
@@ -42,7 +41,7 @@ const MainForm: React.FC = () => {
       const response = await openAiMemo.createCompletion("text-davinci-002", {
         prompt: `generate a ${philosopher}-like philosophical quote on ${prompt}.`,
         temperature: 0.7,
-        max_tokens: 64,
+        max_tokens: 120,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
@@ -67,11 +66,11 @@ const MainForm: React.FC = () => {
       case "Socrates":
         return "Socrates.png";
       case "Nietzsche":
-        return "Nieztsche.png";
+        return "Nietzsche.png";
       case "Marx":
         return "Marx.png";
       case "Saint Augustin":
-        return "StAugustin";
+        return "StAugustin.png";
       default:
         return "";
     }
@@ -129,6 +128,7 @@ const MainForm: React.FC = () => {
           ]}
         >
           <StyledInput
+            id="submitBtn"
             placeholder="(e.g.) money, bread, dogs, neural networks"
             autoComplete="off"
           />

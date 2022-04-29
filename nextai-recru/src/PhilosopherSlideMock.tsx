@@ -49,6 +49,7 @@ const QuoteFooter = styled.p`
 const PhilosopherSlideMock: React.FC = () => {
   const { data } = useApiResponseContext();
 
+  
   if (!data) {
     return null;
   }
