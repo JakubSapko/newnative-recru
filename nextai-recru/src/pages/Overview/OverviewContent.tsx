@@ -55,7 +55,7 @@ const OverviewContent: React.FC = () => {
         <ContentWrapper>
           <StyledParagraph>
             This React-based app was done on the purpose of recruitment process
-            for a NextAI's Frontend developer position. Things I used during the
+            for a NewNative's Frontend developer position. Things I used during the
             development of this app: React, React Hooks (useState, useMemo,
             useContext, custom Hooks) TypeScript, React Router, async/await
             pattern, ant.design, a lot of CSS and - most importantly -{" "}
@@ -87,7 +87,7 @@ const OverviewContent: React.FC = () => {
             chat respones for a given prompt and the second one, which would
             determine the mood of the response and change site styling
             accordingly. And, in my opinion, this could've been a great project
-            if only the I knew how to properly use the "mood endpoint". I don't
+            if only I knew how to properly use the "mood endpoint". I don't
             know if this is the case with endpoint itself or was it due to my
             prompt, but I've always been getting some shades of color red, no
             matter if the message was happy, sad, cheerful or depressive. That's
