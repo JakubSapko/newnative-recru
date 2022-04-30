@@ -1,6 +1,5 @@
 import { Button, Form, Input, message } from "antd";
 import { Configuration, OpenAIApi } from "openai";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useApiContext } from "../../components/ApiContext";
 import { useApiResponseContext } from "../../components/ApiResponseContext";
@@ -32,7 +31,6 @@ const Unauthorized: React.FC = () => {
 
   const [form] = Form.useForm();
 
-  const navigate = useNavigate();
 
   const throwMessage = () => {
     message.error("You provided invalid API key!");
@@ -60,7 +58,6 @@ const Unauthorized: React.FC = () => {
       clearApiKey();
       throwMessage();
 
-      navigate("/app");
       return false;
     }
 
